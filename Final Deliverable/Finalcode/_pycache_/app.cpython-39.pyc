@@ -1,0 +1,46 @@
+a
+    ùzocÒ  ã                   @   s`  d dl Zd dlZd dlmZ d dlmZ d dlmZ d dl	m
+Z
+mZmZmZmZmZ d dlmZ d dlmZ edƒZe
+eƒZd	e_d
+ejd< ejddddZe d¡Ze ¡ r¼ed d¡ƒ dZ e !d¡dd„ ƒZ"e !d¡dd„ ƒZ#ej!dddgddd„ ƒZ$ej!dddgdd d!„ ƒZ%e !d"¡d#d$„ ƒZ&ej!d%ddgdd&d'„ ƒZ'ed(kr\de_(e )¡  dS ))é    N)Ú
+load_model)Úimage)Úpreprocess_input)ÚFlaskÚrequestÚflashÚrender_templateÚredirectÚurl_for)ÚCloudant)ÚClientz(Updated-xception-diabetic-retinopathy.h5ÚabcÚUser_ImagesZUPLOAD_FOLDERz,d3ffc21a-c9d1-4276-a7c3-d7a48a949e1f-bluemixz,oS6rF9Lb8-d8IyJW4VEdHx5kiIN9ehQnNoj8ygKXFjzuT)ÚconnectZmy_dbz$Database '{0}' successfully created.Ú ú/c                   C   s   t dƒS ©Nz
+index.html©r   © r   r   úXE:\College\7th Sem\Naalaiya Thiran\IBM-Project-2226-1658467109\Final Deliverables\app.pyÚindex   s    r   z/indexc                   C   s   t dƒS r   r   r   r   r   r   Úhome   s    r   z	/registerÚGETÚPOST)Úmethodsc                  C   sÂ   t jdkr¶t j d¡} t j d¡}t j d¡}t j d¡}| |||dœ}t|ƒ dd|d ii}t |¡}t|ƒ tt| ¡ ƒƒ t| ¡ ƒd	kr¨t 	|¡}t
+d
+ddS t
+d
+ddS nt
+d
+ƒS d S )Nr   ÚnameZemailidÚnumÚpass)r   ÚmailÚmobileÚpswr   ú$eqr   zregister.htmlz; Registration Successful , please login using your details ©Úpredz< You are already a member , please login using your details )r   ÚmethodÚformÚgetÚprintÚmy_databaseÚget_query_resultÚlenÚallZcreate_documentr   )r   r   r   ZpswdÚdataÚqueryÚdocsÚurlr   r   r   Úregister"   s(    
+ü
+
+r0   z/loginc                  C   sÔ   t jdkrÈt j d¡} t j d¡}t| |ƒ dd| ii}t |¡}t|ƒ tt| ¡ ƒƒ t| ¡ ƒdkrvt	dddS | |d d d krº||d d d	 krºt
+d
+t| ƒ ƒ ttdƒƒS t	dddS nt	dƒS d S )Nr   r   r   r!   r   z
+login.htmlr   r"   r    zLogged in as r   zThe password is wrong.)r   r$   Úargsr&   r'   r(   r)   r*   r+   r   r   Ústrr	   r
+   )ÚuserZpasswr-   r.   r   r   r   Úlogin=   s    
+
+
+(r4   z/logoutc                   C   s   t dƒS )Nzlogout.htmlr   r   r   r   r   ÚlogoutS   s    r5   z/predictc                  C   sè   t jdkrÜt jd } tj t¡}tj t|ƒdt| j	ƒ¡}|  
+|¡ tj|dd}t |¡}tj|dd}t|ƒ}tjt |¡dd}g d	¢}t||d  ƒ}t|ƒ d
+}	d}
+t|	|
+ƒ}|jjdd| dd}td||dS tdƒS d S )Nr   Úfiler   )é+  r7   )Ztarget_sizer   )Zaxisé   )z No Diabetic Retinopathy z Mild NPDR z Moderate NPDR z Severe NPDR z Proliferative DR Z"ACe84a385fa5539d372c1a924452f489a3Z 359788a4ddfb510ac8ecd2fa948b924ez+17088347950z	Results: z+919364580243)Úfrom_ÚbodyÚtozprediction.html)Ú
+predictionÚfname)r   r$   ÚfilesÚosÚpathÚdirnameÚ__file__Újoinr2   ÚfilenameÚsaver   Zload_imgZimg_to_arrayÚnpÚexpand_dimsr   ÚargmaxÚmodelÚpredictr'   r   ÚmessagesÚcreater   )ÚfZbasepathÚfilepathÚimgÚxZimg_datar<   r   ÚresultZaccount_sidZ
+auth_tokenÚclientÚmessager   r   r   rJ   W   s.    
+
+
+
+
+ýrJ   Ú__main__)*ÚnumpyrF   r?   Ztensorflow.keras.modelsr   Ztensorflow.keras.preprocessingr   Z*tensorflow.keras.applications.inception_v3r   Úflaskr   r   r   r   r	   r
+   Zcloudant.clientr   Ztwilio.restr   rI   Ú__name__ÚappÚ
+secret_keyÚconfigZiamrR   Zcreate_databaser(   Úexistsr'   Úformatr3   Úrouter   r   r0   r4   r5   rJ   ÚdebugÚrunr   r   r   r   Ú<module>   sB    
+ÿ
+
+
+
+
+
+
+7
+
